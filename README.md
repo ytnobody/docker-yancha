@@ -7,6 +7,11 @@ Yancha(Yet Another Network CHAt) on Docker
     $ sudo docker pull ytnobody/docker-yancha
     $ sudo docker run -p 3000:3000 -d ytnobody/docker-yancha
 
+
+## what is Yancha?
+
+An opensource chatops tool. See [here](https://github.com/uzulla/yancha) to more information.
+
 ## note
 
 ### about chat log
@@ -25,8 +30,8 @@ If you want enable it, please specify environment variables about twitter oauth.
 
 ### basic setting
 
-* YANCHA\_NAME - name of server infomation
-* YANCHA\_INTRODUCTION - introduction of server infomation
+* YANCHA\_NAME - name of server information
+* YANCHA\_INTRODUCTION - introduction of server information
 * YANCHA\_URL - default is ./
 
 ### using mysql
