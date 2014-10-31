@@ -1,0 +1,31 @@
+#!/bin/bash
+
+cd $YANCHA_ROOT
+
+if [ ! -z "$MYSQL_HOST" ] ; then
+    sed -i "s/__MYSQL_PASSWORD__/$MYSQL_PASSWORD/" /etc/my.cnf
+    chmod 600 /etc/my.cnf
+
+    sed -i "s/__MYSQL_DBNAME__/$MYSQL_DBNAME/" ./db/create_db.sql
+    mysql -h $MYSQL_HOST -u $MYSQL_USER < ./db/create_db.sql > /dev/null 2>&1 &&
+    mysql -h $MYSQL_HOST -u $MYSQL_USER $MYSQL_DBNAME < ./db/init.sql
+
+    sed -i "s/__MYSQL_DBNAME__/$MYSQL_DBNAME/g; s/__MYSQL_USER__/$MYSQL_USER/g; s/__MYSQL_PASSWORD__/$MYSQL_PASSWORD/g; s/__MYSQL_HOST__/$MYSQL_HOST/g;" ./config.pl
+else
+    rm /etc/my.cnf
+    sed -i '54,60d' ./config.pl &&
+    sed -i '54s/#//' ./config.pl &&
+    sed -i '54s/name/dbfile\.sqlite3/' ./config.pl &&
+    sed -i '56d' ./config.pl
+    sqlite3 ./dbfile.sqlite3 < ./db/init_sqlite.sql
+fi
+
+if [ ! -z "$TWITTER_CONSUMER_KEY" ] ; then
+    sed -i "s/__TWITTER_CONSUMER_KEY__/$TWITTER_CONSUMER_KEY/g; s/__TWITTER_CONSUMER_SECRET__/$TWITTER_CONSUMER_SECRET/g;" ./config.pl
+fi
+
+if [ ! -z "$DEBUG" ] ; then
+    bash
+else 
+    ./start.sh
+fi
