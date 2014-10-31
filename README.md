@@ -1,11 +1,11 @@
-# ytnobody/yancha
+# ytnobody/docker-yancha
 
 Yancha(Yet Another Network CHAt) on Docker
 
 ## synopsis
 
-    $ sudo docker pull ytnobody/yancha
-    $ sudo docker run -p 3000:3000 -d ytnobody/yancha
+    $ sudo docker pull ytnobody/docker-yancha
+    $ sudo docker run -p 3000:3000 -d ytnobody/docker-yancha
 
 ## note
 
