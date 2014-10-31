@@ -15,10 +15,10 @@ use strict;
 
     'server_info' => {
         version       => '1.00',
-        name          => 'Hachoji.pm',
+        name          => '__YANCHA_NAME__',
         default_tag   => 'PUBLIC',
-        introduction  => 'テストサーバ',
-        url           => 'http://yancha.hachiojipm.org:3000/',
+        introduction  => '__YANCHA_INTRODUCTION__',
+        url           => '__YANCHA_URL__',
         auth_endpoint => { # endpoint => [ $module_name, $args, $description_for_client ]
             '/login'         => [
                 'Yancha::Auth::Simple'  => {

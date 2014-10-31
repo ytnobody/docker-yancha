@@ -23,6 +23,12 @@ If you want enable it, please specify environment variables about twitter oauth.
 
 ## environment variables
 
+### basic setting
+
+* YANCHA\_NAME - name of server infomation
+* YANCHA\_INTRODUCTION - introduction of server infomation
+* YANCHA\_URL - default is ./
+
 ### using mysql
 
 * MYSQL\_DBHOST - mysql hostname or IP address

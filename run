@@ -2,6 +2,20 @@
 
 cd $YANCHA_ROOT
 
+if [ -z "$YANCHA_NAME" ] ; then
+    YANCHA_NAME='Yancha on Docker'
+fi
+
+if [ -z "$YANCHA_INTRODUCTION" ] ; then
+    YANCHA_INTRODUCTION='Yancha Cloud'
+fi
+
+if [ -z "$YANCHA_URL" ] ; then
+    YANCHA_URL=".\/"
+fi
+
+sed -i "s/__YANCHA_NAME__/$YANCHA_NAME/g; s/__YANCHA_INTRODUCTION__/$YANCHA_INTRODUCTION/g; s/__YANCHA_URL__/$YANCHA_URL/g;" ./config.pl
+
 if [ ! -z "$MYSQL_HOST" ] ; then
     sed -i "s/__MYSQL_PASSWORD__/$MYSQL_PASSWORD/" /etc/my.cnf
     chmod 600 /etc/my.cnf
@@ -27,5 +41,6 @@ fi
 if [ ! -z "$DEBUG" ] ; then
     bash
 else 
+    echo Running $YANCHA_NAME - $YANCHA_INTRODUCTION ...
     ./start.sh
 fi
