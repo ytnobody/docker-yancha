@@ -36,7 +36,7 @@ If you want enable it, please specify environment variables about twitter oauth.
 
 ### using mysql
 
-* MYSQL\_DBHOST - mysql hostname or IP address
+* MYSQL\_HOST - mysql hostname or IP address
 * MYSQL\_DBNAME - database name
 * MYSQL\_USER - username
 * MYSQL\_PASSWORD - password
