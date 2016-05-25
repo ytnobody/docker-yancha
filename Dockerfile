@@ -1,13 +1,16 @@
-FROM ytnobody/ubuntu-jp:latest
+FROM ytnobody/alpine-perl
 MAINTAINER ytnobody <ytnobody@gmail.com>
 
 ENV YANCHA_ROOT /opt/yancha
 
-RUN apt-get install mysql-client libmysqlclient-dev sqlite3 -y --force-yes
+RUN apk update && apk add mysql-client sqlite openssl-dev bash
 
 RUN git clone https://github.com/uzulla/yancha.git $YANCHA_ROOT
-RUN cd $YANCHA_ROOT && carton install && carton install --cpanfile cpanfile.mysql
 
+WORKDIR /opt/yancha
+RUN cpanm --installdeps .
+
+WORKDIR /
 ADD my.cnf /etc/my.cnf
 RUN chmod 600 /etc/my.cnf 
 
@@ -18,4 +21,5 @@ ADD run /opt/run
 RUN chmod +x /opt/run
 
 EXPOSE 3000
-ENTRYPOINT /opt/run
+# CMD "/bin/sh"
+ENTRYPOINT ["/bin/sh","/opt/run"]

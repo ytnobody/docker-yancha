@@ -1,5 +1,7 @@
 #!/bin/bash
 
+MY_CNF=/etc/mysql/my.cnf
+
 cd $YANCHA_ROOT
 
 if [ -z "$YANCHA_NAME" ] ; then
@@ -17,8 +19,8 @@ fi
 sed -i "s/__YANCHA_NAME__/$YANCHA_NAME/g; s/__YANCHA_INTRODUCTION__/$YANCHA_INTRODUCTION/g; s/__YANCHA_URL__/$YANCHA_URL/g;" ./config.pl
 
 if [ ! -z "$MYSQL_HOST" ] ; then
-    sed -i "s/__MYSQL_PASSWORD__/$MYSQL_PASSWORD/" /etc/my.cnf
-    chmod 600 /etc/my.cnf
+    sed -i "s/__MYSQL_PASSWORD__/$MYSQL_PASSWORD/" $MY_CNF
+    chmod 600 $MY_CNF
 
     sed -i "s/__MYSQL_DBNAME__/$MYSQL_DBNAME/" ./db/create_db.sql
     mysql -h $MYSQL_HOST -u $MYSQL_USER < ./db/create_db.sql > /dev/null 2>&1 &&
@@ -26,7 +28,7 @@ if [ ! -z "$MYSQL_HOST" ] ; then
 
     sed -i "s/__MYSQL_DBNAME__/$MYSQL_DBNAME/g; s/__MYSQL_USER__/$MYSQL_USER/g; s/__MYSQL_PASSWORD__/$MYSQL_PASSWORD/g; s/__MYSQL_HOST__/$MYSQL_HOST/g;" ./config.pl
 else
-    rm /etc/my.cnf
+    rm $MY_CNF
     sed -i '54,60d' ./config.pl &&
     sed -i '54s/#//' ./config.pl &&
     sed -i '54s/name/dbfile\.sqlite3/' ./config.pl &&
@@ -42,5 +44,5 @@ if [ ! -z "$DEBUG" ] ; then
     bash
 else 
     echo Running $YANCHA_NAME - $YANCHA_INTRODUCTION ...
-    ./start.sh
+    twiggy -l :3000 --access-log access_log chat.psgi
 fi
